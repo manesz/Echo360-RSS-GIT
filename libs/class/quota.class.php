@@ -34,6 +34,20 @@ class quotaClass {
 
     public function getQuotaByDate(){
 
+        $arrResults = array();
+
+        $conn = $this->connClass->sqlsrv_connection();
+        $sql = "{CALL [RSS_getQuotaOpportunityByDate]}";
+        $query = sqlsrv_query($conn, $sql) or die( print_r( sqlsrv_errors(), true));
+        while($result = sqlsrv_fetch_array($query)):
+            $arrResults[] = array(
+                $result[0] // date
+            , $result[1] // status
+            , $result[2] // total
+            );
+        endwhile;
+        return $arrResults;
+
     }//END: getQuotaByDate()
 
 }//END: quotaClass
