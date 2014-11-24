@@ -1,10 +1,11 @@
 <?php
-session_start();
 set_time_limit ( -1 );
+session_start();
 include_once("libs/class/connection.class.php");
 include_once("libs/class/offer.class.php");
 include_once("libs/class/user.class.php");
 include_once("libs/class/session.class.php");
+include_once("libs/class/quota.class.php");
 include_once("libs/class/log.class.php");
 
 $dbConnection = new connectionClass();
@@ -665,6 +666,82 @@ switch($action){
             endif;
         endforeach;
 
+        break;
+    case 'query_quota_with_profile':
+//        var_dump($_POST);
+        @$getLog = $_POST['getLog'];
+        @$getStatus = $_POST['getStatus'];
+        @$getStartDate = $_POST['getStartDate'];
+        @$getEndDate = $_POST['getEndDate'];
+
+        $arrStatus = '';
+        $countStatus = 0;
+
+        if(!is_null($getStatus)):
+            foreach($getStatus as $key=>$value):
+                $strPass = ',';
+                 if($countStatus == 0){$arrStatus .= '|'.$value.'|';} else {$arrStatus .= ',|'.$value.'|';};
+                $countStatus++;
+            endforeach;
+        endif;
+
+        $classQuota = new quotaClass();
+
+        if(is_null($getLog) and is_null($getStatus) and $getStartDate == '' and $getEndDate == ''):
+            $getQuotaWithProfile = $classQuota->getQuotaWithProfile('TOP 1000',1, '|AC|' );
+        elseif(is_null($getLog) and !is_null($getStatus)):
+            $getQuotaWithProfile = $classQuota->getQuotaWithProfile('TOP 1000',1, $arrStatus );
+        elseif(!is_null($getLog) and !is_null($getStatus) and !is_null($getStartDate) and !is_null($getEndDate)):
+            $getQuotaWithProfile = $classQuota->getQuotaWithProfile('TOP 1000',2, $arrStatus, $getStartDate, $getEndDate );
+        else:
+            echo "<h1>ERROR: please check input data.</h1>";
+        endif;
+
+?>
+        <table id="tblQuotaOpportunityByDate" class="table table-striped table-bordered ">
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Accound ID</th>
+                <th>Status</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>Location</th>
+                <th>Income</th>
+                <th>Education</th>
+                <th>Freq</th>
+                <th>Dur</th>
+                <th>Used</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach($getQuotaWithProfile as $key=>$value):?>
+            <tr>
+                <td><?php echo $value[0]->format('Y-m-d'); ?></td>
+                <td><?php echo $value[1]; ?></td>
+                <td><?php echo $value[2]; ?></td>
+                <td><?php echo $value[3]; ?></td>
+                <td><?php echo $value[4]; ?></td>
+                <td><?php echo $value[5]; ?></td>
+                <td><?php echo $value[6]; ?></td>
+                <td><?php echo $value[7]; ?></td>
+                <td><?php echo $value[8]; ?></td>
+                <td><?php echo $value[9]; ?></td>
+                <td><?php echo $value[10]; ?></td>
+            </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+        <script>
+            $(document).ready(function(){
+
+                // DataTable script
+                $('#tblQuotaOpportunityByDate').dataTable( {
+                    "order": [[ 0, "desc" ], [1, "asc"]]
+                });
+            });
+        </script>
+<?php
         break;
     case 'sponsor':
 //        echo '<h1>SPONSOR</h1>';

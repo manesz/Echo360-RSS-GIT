@@ -29,26 +29,9 @@ $arrTotalQuotaIA = array_filter($quotaOpportunityByDate, function ($item) { retu
         <div class="row">
             <?php include_once("sidebar.php"); ?>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <h1 class="page-header"> Used Opportunity : </h1>
+                <h1 class="page-header"> Quota Used Opportunity : </h1>
 
                 <div id="quotaByDateGraph" class="col-md-12" style=""></div>
-
-<!--                <div class="col-md-3 text-center" style="min-height: 150px;">-->
-<!--                    <span>Quota of AC today<br/></span>-->
-<!--                    <h2>--><?php //echo number_format($totalQuotaAC); ?><!--</h2>-->
-<!--                </div>-->
-<!--                <div class="col-md-3 text-center" style="min-height: 150px;">-->
-<!--                    <span>Quota of ACD today<br/></span>-->
-<!--                    <h2>--><?php //echo number_format($totalQuotaACD); ?><!--</h2>-->
-<!--                </div>-->
-<!--                <div class="col-md-3 text-center" style="min-height: 150px;">-->
-<!--                    <span>Quota of IA today<br/></span>-->
-<!--                    <h2>--><?php //echo number_format($totalQuotaIA); ?><!--</h2>-->
-<!--                </div>-->
-<!--                <div class="col-md-3 text-center" style="min-height: 150px;">-->
-<!--                    <span style="text-decoration: underline;"><strong>Total quota today</strong><br/></span>-->
-<!--                    <h2>--><?php //echo number_format($totalQuotaAC+$totalQuotaACD+$totalQuotaIA); ?><!--</h2>-->
-<!--                </div>-->
 
                 <table id="tblQuotaOpportunityByDate" class="table table-striped table-bordered ">
                     <thead>

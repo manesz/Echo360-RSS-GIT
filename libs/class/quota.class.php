@@ -69,4 +69,31 @@ class quotaClass {
 
     }//END: getQuotaByDate()
 
+    public function getQuotaWithProfile($topSelect = 'TOP 1000', $getLog = 1, $status = 'AC', $stratDate = null, $endDate = null){
+
+        $arrResults = array();
+
+        $conn = $this->connClass->sqlsrv_connection();
+        $sql = "{CALL [RSS_getQuotaWithProfile]('$topSelect',$getLog, '$status', '$stratDate', '$endDate' )}";
+        $query = sqlsrv_query($conn, $sql) or die( print_r( sqlsrv_errors(), true));
+
+        while($result = sqlsrv_fetch_array($query)):
+            $arrResults[] = array(
+                $result[0] // date
+                , $result[1] // Account_Id
+                , $result[2] // Status_Cd
+                , $result[3] // Gender_Cd
+                , $result[4] // Age
+                , $result[5] // Location
+                , $result[6] // Income_Range_Cd
+                , $result[7] // Education_Cd
+                , $result[8] // Quota_Freq_Val
+                , $result[9] // Quota_Dur_Val
+                , $result[10] // Quota_Freq_Used_Val
+            );
+        endwhile;
+        return $arrResults;
+
+    }//END: getQuotaByDate()
+
 }//END: quotaClass

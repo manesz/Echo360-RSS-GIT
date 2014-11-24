@@ -68,7 +68,8 @@
                     <li><a href="marketing_score_list.php">Marketing Score list</a></li>
                     <li class="diver"><hr/></li>
                     <li><a href="daily_portfolio_status.php">Account Status</a></li>
-                    <li><a href="quota_opportunity.php">Used Opportunity</a></li>
+                    <li><a href="quota_opportunity.php">Quota Used Opportunity</a></li>
+                    <li><a href="quota_with_profile.php">Quota with Profile</a></li>
                     <li class="diver"><hr/></li>
                     <li><a href="customer_update_profile.php">Update profile (Test)</a></li>
                     <li><a href="offer_update_limit.php">Update Offer Limit</a></li>
