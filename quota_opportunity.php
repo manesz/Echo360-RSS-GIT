@@ -30,8 +30,6 @@ $arrTotalQuotaIA = array_filter($quotaOpportunityByDate, function ($item) { retu
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <h1 class="page-header"> Used Opportunity : </h1>
 
-                <?php var_dump($arrTotalQuotaAC); ?>
-
                 <div class="col-md-3 text-center" style="min-height: 150px;">
                     <span>Quota of AC today<br/></span>
                     <h2><?php echo number_format($totalQuotaAC); ?></h2>
