@@ -37,13 +37,32 @@ class quotaClass {
         $arrResults = array();
 
         $conn = $this->connClass->sqlsrv_connection();
-        $sql = "{CALL [RSS_getQuotaOpportunityByDate]}";
+        $sql = "{CALL [RSS_getQuotaOpportunityByDate](1)}";
         $query = sqlsrv_query($conn, $sql) or die( print_r( sqlsrv_errors(), true));
         while($result = sqlsrv_fetch_array($query)):
             $arrResults[] = array(
                 $result[0] // date
             , $result[1] // status
             , $result[2] // total
+            );
+        endwhile;
+        return $arrResults;
+
+    }//END: getQuotaByDate()
+
+    public function getQuotaGroupByDate(){
+
+        $arrResults = array();
+
+        $conn = $this->connClass->sqlsrv_connection();
+        $sql = "{CALL [RSS_getQuotaOpportunityByDate](2)}";
+        $query = sqlsrv_query($conn, $sql) or die( print_r( sqlsrv_errors(), true));
+        while($result = sqlsrv_fetch_array($query)):
+            $arrResults[] = array(
+                $result[0] // date
+                , $result[1] // AC
+                , $result[2] // ACD
+                , $result[3] // IA
             );
         endwhile;
         return $arrResults;

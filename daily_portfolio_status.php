@@ -65,7 +65,7 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-                                Quota used description: <i class="indicator glyphicon glyphicon-chevron-up pull-right"></i>
+                                Account status all data: <i class="indicator glyphicon glyphicon-chevron-up pull-right"></i>
                             </a>
                         </h4>
                     </div>

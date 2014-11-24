@@ -7,6 +7,7 @@ $classQuota = new quotaClass();
 
 $quotaOpportunityListAll = $classQuota->getQuotaListAll();
 $quotaOpportunityByDate = $classQuota->getQuotaByDate();
+$quotaOpportunityGroupByDate = $classQuota->getQuotaGroupByDate();
 $quotaOpportunityListWithDate = $classQuota->getQuotaListAll(null, date("Y-m-d",strtotime("yesterday")), date("Y-m-d"));
 
 $quotaOpportunityAC = array_filter($quotaOpportunityListWithDate, function ($item) { return $item[0] == 'AC'; });
@@ -30,37 +31,43 @@ $arrTotalQuotaIA = array_filter($quotaOpportunityByDate, function ($item) { retu
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <h1 class="page-header"> Used Opportunity : </h1>
 
-                <div class="col-md-3 text-center" style="min-height: 150px;">
-                    <span>Quota of AC today<br/></span>
-                    <h2><?php echo number_format($totalQuotaAC); ?></h2>
-                </div>
-                <div class="col-md-3 text-center" style="min-height: 150px;">
-                    <span>Quota of ACD today<br/></span>
-                    <h2><?php echo number_format($totalQuotaACD); ?></h2>
-                </div>
-                <div class="col-md-3 text-center" style="min-height: 150px;">
-                    <span>Quota of IA today<br/></span>
-                    <h2><?php echo number_format($totalQuotaIA); ?></h2>
-                </div>
-                <div class="col-md-3 text-center" style="min-height: 150px;">
-                    <span style="text-decoration: underline;"><strong>Total quota today</strong><br/></span>
-                    <h2><?php echo number_format($totalQuotaAC+$totalQuotaACD+$totalQuotaIA); ?></h2>
-                </div>
+                <div id="quotaByDateGraph" class="col-md-12" style=""></div>
+
+<!--                <div class="col-md-3 text-center" style="min-height: 150px;">-->
+<!--                    <span>Quota of AC today<br/></span>-->
+<!--                    <h2>--><?php //echo number_format($totalQuotaAC); ?><!--</h2>-->
+<!--                </div>-->
+<!--                <div class="col-md-3 text-center" style="min-height: 150px;">-->
+<!--                    <span>Quota of ACD today<br/></span>-->
+<!--                    <h2>--><?php //echo number_format($totalQuotaACD); ?><!--</h2>-->
+<!--                </div>-->
+<!--                <div class="col-md-3 text-center" style="min-height: 150px;">-->
+<!--                    <span>Quota of IA today<br/></span>-->
+<!--                    <h2>--><?php //echo number_format($totalQuotaIA); ?><!--</h2>-->
+<!--                </div>-->
+<!--                <div class="col-md-3 text-center" style="min-height: 150px;">-->
+<!--                    <span style="text-decoration: underline;"><strong>Total quota today</strong><br/></span>-->
+<!--                    <h2>--><?php //echo number_format($totalQuotaAC+$totalQuotaACD+$totalQuotaIA); ?><!--</h2>-->
+<!--                </div>-->
 
                 <table id="tblQuotaOpportunityByDate" class="table table-striped table-bordered ">
                     <thead>
                     <tr>
                         <th>Date</th>
-                        <th>Quota</th>
+                        <th>AC</th>
+                        <th>ACD</th>
+                        <th>IA</th>
                         <th>Total</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach($quotaOpportunityByDate as $key=>$value):?>
+                    <?php foreach($quotaOpportunityGroupByDate as $key=>$value):?>
                         <tr>
                             <td><?php echo $value[0]->format('Y-m-d'); ?></td>
-                            <td><?php echo $value[1]; ?></td>
+                            <td><?php echo number_format($value[1]); ?></td>
                             <td><?php echo number_format($value[2]); ?></td>
+                            <td><?php echo number_format($value[3]); ?></td>
+                            <td><?php echo number_format($value[1]+$value[2]+$value[3]); ?></td>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>
@@ -101,20 +108,6 @@ $arrTotalQuotaIA = array_filter($quotaOpportunityByDate, function ($item) { retu
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-                                    Quota used graph: <i class="indicator glyphicon glyphicon-chevron-up pull-right"></i>
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapse2" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                <div id="quotaByDateGraph" class="col-md-12" style=""></div>
-                            </div>
-                        </div>
-                    </div>
 
                 </div><!-- END: accordion -->
 
@@ -144,17 +137,11 @@ $arrTotalQuotaIA = array_filter($quotaOpportunityByDate, function ($item) { retu
                     .toggleClass('glyphicon-chevron-down glyphicon-chevron-up');
             }
 
-//            $(".collapse").collapse();
-//            $('#collapse1').collapse({hide: true})
-//            $('#collapse2').collapse({hide: true})
-//            $('#collapse1').collapse("hide");
-//            $('#collapse2').collapse("hide");
-
             // Highchart script
             $('#quotaByDateGraph').highcharts({
                 chart: {
                     type: 'spline'
-                    , width: 950
+//                    , width: 950
                 },
 
                 plotOptions: {
