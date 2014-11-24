@@ -1,7 +1,7 @@
 <?php include_once("header.php"); ?>
 <?php include_once("navigator.php"); ?>
 <?php include_once("libs/class/quota.class.php"); ?>
-<div></div>
+
 <?php
 $classQuota = new quotaClass();
 
@@ -17,11 +17,9 @@ $totalQuotaAC = array_sum(array_map(function($item) { return $item[2]; }, $quota
 $totalQuotaACD = array_sum(array_map(function($item) { return $item[2]; }, $quotaOpportunityACD));
 $totalQuotaIA = array_sum(array_map(function($item) { return $item[2]; }, $quotaOpportunityIA));
 
-//foreach($quotaOpportunityByDate as $key=>$value):
-    $arrTotalQuotaAC = array_filter($quotaOpportunityByDate, function ($item) { return $item[1] == 'AC'; });
-    $arrTotalQuotaACD = array_filter($quotaOpportunityByDate, function ($item) { return $item[1] == 'ACD'; });
-    $arrTotalQuotaIA = array_filter($quotaOpportunityByDate, function ($item) { return $item[1] == 'IA'; });
-//endforeach;
+$arrTotalQuotaAC = array_filter($quotaOpportunityByDate, function ($item) { return $item[1] == 'AC'; });
+$arrTotalQuotaACD = array_filter($quotaOpportunityByDate, function ($item) { return $item[1] == 'ACD'; });
+$arrTotalQuotaIA = array_filter($quotaOpportunityByDate, function ($item) { return $item[1] == 'IA'; });
 
 ?>
 
@@ -31,6 +29,8 @@ $totalQuotaIA = array_sum(array_map(function($item) { return $item[2]; }, $quota
             <?php include_once("sidebar.php"); ?>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <h1 class="page-header"> Used Opportunity : </h1>
+
+                <?php var_dump($arrTotalQuotaAC); ?>
 
                 <div class="col-md-3 text-center" style="min-height: 150px;">
                     <span>Quota of AC today<br/></span>
@@ -124,6 +124,8 @@ $totalQuotaIA = array_sum(array_map(function($item) { return $item[2]; }, $quota
         </div>
     </div>
 
+    <style></style>
+
     <script>
 
         $(document).ready(function(){
@@ -154,6 +156,14 @@ $totalQuotaIA = array_sum(array_map(function($item) { return $item[2]; }, $quota
             $('#quotaByDateGraph').highcharts({
                 chart: {
                     type: 'spline'
+                    , width: 950
+                },
+
+                plotOptions: {
+                    columnrange: {
+                        grouping: false,
+                        pointPadding: -0.35
+                    }
                 },
                 title: {
                     text: 'Daily Quota Used'

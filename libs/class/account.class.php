@@ -260,9 +260,9 @@ class accountClass {
 
     }//END: getDailyPortfolioList()
 
-    public function getAccountStatusAll(){
+    public function getAccountStatusAll($type = 1){
         $conn = $this->connClass->sqlsrv_connection();
-        $sql = "{CALL [RSS_getAccountStatusAll](1)}";
+        $sql = "{CALL [RSS_getAccountStatusAll]($type)}";
         $query = sqlsrv_query($conn, $sql) or die( print_r( sqlsrv_errors(), true));
         while( $result = sqlsrv_fetch_array($query) ):
             $arrResult[] = array(
